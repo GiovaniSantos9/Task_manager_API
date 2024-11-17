@@ -1,0 +1,165 @@
+{
+	"info": {
+		"_postman_id": "0f66be47-eb6d-45b7-9bd3-34900bdf2265",
+		"name": "Task Manager Api",
+		"description": "Neste trabalho, o objetivo é desenvolver uma API RESTful para um sistema  \nde controle de tarefas. A API permite a criação, edição, visualização e exclusão  \nde tarefas, além de permitir a atribuição de tarefas para diferentes usuários.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "39685368"
+	},
+	"item": [
+		{
+			"name": "Registrar Usuário",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": " {\r\n     \"username\": \"testuser\",\r\n     \"password\": \"password123\"\r\n   }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/users/register",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users",
+						"register"
+					]
+				},
+				"description": "**Descrição:** \"Registra um novo usuário.\"\n\n**Parâmetros:**\n\n\\`username\\` (string, obrigatório): Nome de usuário do novo usuário.\n\n\\`password\\` (string, obrigatório): Senha do novo usuário.\n\n**Resposta Esperada:**\n\n``` json\n - 201 Created:\n   {\n     \"success\": true,\n     \"id\": 1,\n     \"username\": \"testuser\"\n     }\n   }\n\n ```\n\n\"user\": {\n\n``` json\n - 400 Bad Request:\n   {\n     \"error\": \"Username already exists\"\n   }\n\n ```"
+			},
+			"response": []
+		},
+		{
+			"name": "Fazer  Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"testuser\",\r\n    \"password\": \"password123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/users/login",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users",
+						"login"
+					]
+				},
+				"description": "- **Descrição**: Faz login de um usuário e retorna um token de autenticação.\n    \n- **Parâmetros**:\n    \n    - **username** (string, obrigatório): Nome de usuário.\n        \n    - **password** (string, obrigatório): Senha.\n        \n- **Request Body**:\n    \n    ``` json\n      {\n        \"username\": \"testuser\",\n        \"password\": \"password123\"\n      }\n    \n     ```\n    \n- **Respostas Esperadas**:\n    \n    - **200 OK**\n        \n        ``` json\n        {\n          \"success\": true,\n          \"user\": {\n            \"id\": 1,\n            \"username\": \"testuser\"\n          },\n          \"token\": \"seu_token_aqui\"\n        }\n        \n         ```\n        \n    - **401 Unauthorized** (se as credenciais estiverem incorretas)\n        \n        ``` json\n        {\n          \"error\": \"Incorrect username or password\"\n        }\n        \n         ```"
+			},
+			"response": []
+		},
+		{
+			"name": "Criar Tarefa",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"Minha primeira tarefa\",\r\n    \"description\": \"Descrição da tarefa.\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/tasks/create",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"tasks",
+						"create"
+					]
+				},
+				"description": "- **Descrição**: Cria uma nova tarefa para o usuário autenticado.\n- **Headers**:\n\n  - **Authorization**: `Bearer {{authToken}}`\n- **Request Body**:\n    ```json\n    {\n      \"title\": \"Minha primeira tarefa\",\n      \"description\": \"Descrição da tarefa.\"\n    }\n    ```\n- **Respostas Esperadas**:\n  - **201 Created**\n    ```json\n    {\n      \"success\": true,\n      \"task\": {\n        \"id\": 1,\n        \"title\": \"Minha primeira tarefa\",\n        \"description\": \"Descrição da tarefa.\",\n        \"userId\": 1\n      }\n    }\n    ```"
+			},
+			"response": []
+		},
+		{
+			"name": "Ver Tarefas",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/tasks",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"tasks"
+					]
+				},
+				"description": "- **Descrição**: Retorna uma lista de tarefas do usuário autenticado.\n    \n- **Headers**:\n    - **Authorization**: `Bearer {{authToken}}`\n        \n- **Respostas Esperadas**:\n    - **200 OK**\n        \n        ``` json\n        {\n          \"success\": true,\n          \"tasks\": [\n            {\n              \"id\": 1,\n              \"title\": \"Minha primeira tarefa\",\n              \"description\": \"Descrição da tarefa.\",\n              \"userId\": 1\n            }\n          ]\n        }\n        \n         ```"
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/tasks/:id/edit",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"tasks",
+						":id",
+						"edit"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": ""
+						}
+					]
+				},
+				"description": "- **Descrição**: Edita uma tarefa existente.\n    \n- **Headers**:\n    \n    - **Authorization**: `Bearer {{authToken}}`\n        \n- **Parâmetros**:\n    \n    - **id** (int, obrigatório): ID da tarefa a ser editada.\n        \n- **Request Body**:\n    \n    ``` json\n      {\n        \"title\": \"Título atualizado\",\n        \"description\": \"Descrição atualizada.\"\n      }\n    \n     ```\n    \n- **Respostas Esperadas**:\n    \n    - **200 OK**\n        \n        ``` json\n        {\n          \"success\": true,\n          \"task\": {\n            \"id\": 1,\n            \"title\": \"Título atualizado\",\n            \"description\": \"Descrição atualizada.\"\n          }\n        }\n        \n         ```\n        \n    - **404 Not Found** (se a tarefa não existir)\n        \n        ``` json\n        {\n          \"error\": \"Task not found\"\n        }\n        \n         ```"
+			},
+			"response": []
+		},
+		{
+			"name": "Deletar Tarefa",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/tasks/:id/delete",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"tasks",
+						":id",
+						"delete"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": ""
+						}
+					]
+				},
+				"description": "- **Descrição**: Deleta uma tarefa existente.\n    \n- **Headers**:\n    \n    - **Authorization**: `Bearer {{authToken}}`\n        \n- **Parâmetros**:\n    \n    - **id** (int, obrigatório): ID da tarefa a ser deletada.\n        \n- **Respostas Esperadas**:\n    \n    - **200 OK**\n        \n        ``` json\n        {\n          \"success\": true,\n          \"message\": \"Task deleted successfully\"\n        }\n        \n         ```\n        \n    - **404 Not Found** (se a tarefa não existir)\n        \n        ``` json\n        {\n          \"error\": \"Task not found\"\n        }\n        \n         ```"
+			},
+			"response": []
+		}
+	]
+}
