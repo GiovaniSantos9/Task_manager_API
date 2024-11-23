@@ -12,7 +12,7 @@ A Task Manager API é uma aplicação web que permite aos usuários gerenciar su
 ### 2.2. Instruções de Instalação e Execução
 1. Clone o repositório:
    ```bash
-   git clone https://github.com/GiovaniSantos9/task-manager-api.git
+   git clone https://github.com/GiovaniSantos9/bckend_task_manager_api.git
    cd task-manager-api
    ```
    
